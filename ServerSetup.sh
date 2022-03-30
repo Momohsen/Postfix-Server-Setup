@@ -583,7 +583,7 @@ function Install_GoPhish {
 
 	
 	#make gohish as a service
-	cat <<EOF >> /etc/init.d/gophish
+	cat <<EOT >> /etc/init.d/gophish
 	#!/bin/bash
 	# /etc/init.d/gophish
 	# initialization file for stop/start of gophish application server
@@ -625,7 +625,7 @@ function Install_GoPhish {
 	case $1 in
 	start|stop|status) “$1” ;;
 	esac
-	EOF
+	EOT
 	
 	sudo chmod +x /etc/init.d/gophish
 	sudo mkdir /var/log/gophish
