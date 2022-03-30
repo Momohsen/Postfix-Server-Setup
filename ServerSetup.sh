@@ -583,7 +583,7 @@ function Install_GoPhish {
 
 	
 	#make gohish as a service
-	cat <<EOT >> /etc/init.d/gophish
+	cat <<-EOT >> /etc/init.d/gophish
 	#!/bin/bash
 	# /etc/init.d/gophish
 	# initialization file for stop/start of gophish application server
