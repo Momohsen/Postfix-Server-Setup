@@ -567,7 +567,8 @@ function Install_GoPhish {
 	
 	echo "export GOROOT=/usr/local/go" >> ~/.profile  
 	echo "export GOPATH=$HOME/unixcop/" >> ~/.profile
-	echo "export PATH=$GOPATH/bin:$GOROOT/bin:$PATH" >> ~/.profile
+	echo 'export PATH=$GOPATH/bin:$GOROOT/bin:$PATH' >> ~/.profile
+	#single quote ' is to put $ as it is :) 
 	
 	
 	source ~/.profile
