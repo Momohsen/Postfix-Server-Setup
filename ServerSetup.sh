@@ -556,35 +556,70 @@ setupSSH(){
 function Install_GoPhish {
 	function Install_GoPhish {
 
-	sudo apt-get install golang -qq -y
-	apt-get install build-essential -y
-	go get github.com/gophish/gophish
-	cd /root/go/src/github.com/gophish/gophish
+	#sudo apt-get install golang -qq -y
+	echo "Downloading and installing Go"
+	apt-get install build-essential -yy
+	sudo apt install wget -yy
+	wget https://go.dev/dl/go1.19.3.linux-amd64.tar.gz
+	tar xvf go1.19.3.linux-amd64.tar.gz > /dev/null 2>&1
+	mv go /usr/local
+	
+	cat << EOF >> ~/.profile
+	export GOROOT=/usr/local/go    
+	export GOPATH=$HOME/unixcop/
+	export PATH=$GOPATH/bin:$GOROOT/bin:$PATH
+	EOF
+	
+	source ~/.profile
+	go version
+	echo "dowonloading gophish..."
+	apt install git -y
+	git clone https://github.com/gophish/gophish.git
+	cp -r gohish /opt/
+	cd /opt/gophish
 	go build 
-	sudo ./gophish
+	chmod +x gophish
+	
+	echo "GoPhish raw version installed"
+	
+	
+	
 	
 	read -p "Enter your web server's domain: " -r primary_domain
 	if [ -f "/etc/letsencrypt/live/${primary_domain}/fullchain.pem" ]
 	then
 		ssl_cert="/etc/letsencrypt/live/${primary_domain}/fullchain.pem"
 		ssl_key="/etc/letsencrypt/live/${primary_domain}/privkey.pem"
-		cp $ssl_cert ${primary_domain}.crt
-		cp $ssl_key ${primary_domain}.key
+		#cp $ssl_cert ${primary_domain}.crt
+		#cp $ssl_key ${primary_domain}.key
 	else
 		echo "Certificate not found, use Install SSL option first"
 	fi
-
+	echo "editing config.json file..."
 	sed -i 's/127.0.0.1:3333/0.0.0.0:3333/g' config.json
-	sed -i "s/gophish_admin/$primary_domain/g" config.json
-	sed -i "s/gophish_admin/$primary_domain/g" config.json
+	sed -i "s/gophish_admin.crt/$ssl_cert/g" config.json
+	sed -i "s/gophish_admin.key/$ssl_key/g" config.json
 	sed -i "s/example/$primary_domain/g" config.json
-	#sed -i "s/example.key/primary_domain/g" config.json
+	sed -i 's/false/true/g' config.json
+	sed -i 's/80/443/g' config.json
+	sed -i "s/example.crt/$ssl_cert/g" config.json
+	sed -i "s/example.key/$ssl_key/g" config.json
+	
 
 
 	echo "GoPhish installed"
 
 	#create a script to Script to start, stop and show status gophish
-
+	wget -O gophish.service https://raw.githubusercontent.com/bl13pbl03p/buildphish/main/gophish.service 
+	
+	sudo useradd -r gophish
+	sudo cp gophish.service /etc/systemd/system/
+	sudo mkdir /var/log/gophish
+	sudo chown -R gophish:gophish /opt/gophish/ /var/log/gophish/
+	sudo setcap cap_net_bind_service=+ep /opt/gophish/gophish
+	sudo systemctl daemon-reload
+	sudo systemctl start gophish
+	sudo systemctl enable gophish
 
 }
 
