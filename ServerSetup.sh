@@ -564,11 +564,11 @@ function Install_GoPhish {
 	tar xvf go1.19.3.linux-amd64.tar.gz > /dev/null 2>&1
 	mv go /usr/local
 	
-	cat << EOF >> ~/.profile
-	export GOROOT=/usr/local/go    
-	export GOPATH=$HOME/unixcop/
-	export PATH=$GOPATH/bin:$GOROOT/bin:$PATH
-	EOF
+	
+	echo "export GOROOT=/usr/local/go" >> ~/.profile  
+	echo "export GOPATH=$HOME/unixcop/" >> ~/.profile
+	echo "export PATH=$GOPATH/bin:$GOROOT/bin:$PATH" >> ~/.profile
+	
 	
 	source ~/.profile
 	go version
