@@ -557,10 +557,10 @@ function Install_GoPhish {
 	function Install_GoPhish {
 
 	#sudo apt-get install golang -qq -y
-	echo "Downloading and installing Go"
-	apt-get install build-essential -yy
-	sudo apt install wget -yy
-	wget https://go.dev/dl/go1.19.3.linux-amd64.tar.gz
+	echo "Downloading and installing Go" 
+	apt-get install build-essential -yy /dev/null 2>&1
+	sudo apt install wget -yy /dev/null 2>&1
+	wget https://go.dev/dl/go1.19.3.linux-amd64.tar.gz /dev/null 2>&1
 	tar xvf go1.19.3.linux-amd64.tar.gz > /dev/null 2>&1
 	mv go /usr/local
 	
@@ -575,7 +575,7 @@ function Install_GoPhish {
 	echo "dowonloading gophish..."
 	apt install git -y
 	git clone https://github.com/gophish/gophish.git
-	cp -r gohish /opt/
+	cp -r gophish /opt/
 	cd /opt/gophish
 	go build 
 	chmod +x gophish
