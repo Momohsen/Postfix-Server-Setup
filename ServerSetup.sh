@@ -559,7 +559,7 @@ function Install_Go {
 	
 	echo "Downloading and installing Go" 
 	apt-get install build-essential -yy > /dev/null 2>&1
-	sudo apt install wget -yy /dev/null > 2>&1
+	sudo apt install wget -yy > /dev/null  2>&1
 	wget https://go.dev/dl/go1.19.3.linux-amd64.tar.gz > /dev/null 2>&1
 	tar xvf go1.19.3.linux-amd64.tar.gz 
 	mv go /usr/local
