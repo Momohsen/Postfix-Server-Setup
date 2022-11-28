@@ -553,8 +553,8 @@ setupSSH(){
 
 }
 
+
 function Install_Go {
-	function Install_Go {
 
 	
 	echo "Downloading and installing Go" 
@@ -578,10 +578,10 @@ function Install_Go {
 	apt instal
 	
 	}
-}	
+	
 	
 function set-gophish-service {
-	function function set-gophish-service {
+
 	
 	#create a script to Script to start, stop and show status gophish
 	wget -O gophish.service https://raw.githubusercontent.com/bl13pbl03p/buildphish/main/gophish.service 
@@ -596,14 +596,6 @@ function set-gophish-service {
 	sudo systemctl enable gophish
 
  {
-{	
-	
-	
-	
-	
-	
-
-
 	
 
 	
@@ -611,7 +603,7 @@ function set-gophish-service {
 
 
 function Install_GoPhish {
-	function Install_GoPhish {
+	
 
 	#sudo apt-get install golang -qq -y
 	echo "Downloading and installing Go" 
@@ -681,7 +673,7 @@ function Install_GoPhish {
 
 }
 
-}
+
 function Install_IRedMail {
 	echo "Downloading iRedMail"
 	wget https://bitbucket.org/zhb/iredmail/downloads/iRedMail-0.9.6.tar.bz2
