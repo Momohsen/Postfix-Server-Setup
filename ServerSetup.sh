@@ -553,6 +553,63 @@ setupSSH(){
 
 }
 
+function Install_Go {
+	function Install_Go {
+
+	
+	echo "Downloading and installing Go" 
+	apt-get install build-essential -yy > /dev/null 2>&1
+	sudo apt install wget -yy /dev/null > 2>&1
+	wget https://go.dev/dl/go1.19.3.linux-amd64.tar.gz > /dev/null 2>&1
+	tar xvf go1.19.3.linux-amd64.tar.gz 
+	mv go /usr/local
+	
+	echo "Editing ~/.profile file" 
+	
+	echo "export GOROOT=/usr/local/go" >> ~/.profile  
+	echo "export GOPATH=$HOME/unixcop/" >> ~/.profile
+	echo 'export PATH=$GOPATH/bin:$GOROOT/bin:$PATH' >> ~/.profile
+	#single quote ' is to put $ as it is :) 
+	
+	source ~/.profile
+	
+	go version
+	echo "dowonloading gophish..."
+	apt instal
+	
+	}
+}	
+	
+function set-gophish-service {
+	function function set-gophish-service {
+	
+	#create a script to Script to start, stop and show status gophish
+	wget -O gophish.service https://raw.githubusercontent.com/bl13pbl03p/buildphish/main/gophish.service 
+	
+	sudo useradd -r gophish
+	sudo cp gophish.service /etc/systemd/system/
+	sudo mkdir /var/log/gophish
+	sudo chown -R gophish:gophish /opt/gophish/ /var/log/gophish/
+	sudo setcap cap_net_bind_service=+ep /opt/gophish/gophish
+	sudo systemctl daemon-reload
+	sudo systemctl start gophish
+	sudo systemctl enable gophish
+
+ {
+{	
+	
+	
+	
+	
+	
+
+
+	
+
+	
+
+
+
 function Install_GoPhish {
 	function Install_GoPhish {
 
@@ -636,15 +693,15 @@ function Install_IRedMail {
 }
 
 PS3="Server Setup Script - Pick an option: "
-options=("Setup SSH" "Debian Prep" "Ubuntu Prep" "Install SSL" "Install Mail Server" "Add Aliases" "Get DNS Entries" "Install GoPhish" "Install IRedMail")
+options=("Setup SSH" "Debian Prep" "Ubuntu Prep" "Install SSL" "Install Mail Server" "Add Aliases" "Get DNS Entries" "Install GO"  "Install GoPhish" "Set gophish as a service" "Install IRedMail")
 select opt in "${options[@]}" "Quit"; do
 
     case "$REPLY" in
 
     #Prep
-    1) setupSSH;;
+                1) setupSSH;;
 
-		2) debian_initialize;;
+                2) debian_initialize;;
 
 		3) ubuntu_initialize;;
 
@@ -655,10 +712,14 @@ select opt in "${options[@]}" "Quit"; do
 		6) add_alias;;
 
 		7) get_dns_entries;;
+		
+		8) Install_Go;;
 
-		8) Install_GoPhish;;
+		9) Install_GoPhish;;
+		
+		10) set-gophish-service;;
 
-		9) Install_IRedMail;;
+		11) Install_IRedMail;;
 
     $(( ${#options[@]}+1 )) ) echo "Goodbye!"; break;;
     *) echo "Invalid option. Try another one.";continue;;
